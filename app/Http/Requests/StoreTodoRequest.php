@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
 
-class StorePostRequest extends FormRequest
+class StoreTodoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

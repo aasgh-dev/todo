@@ -8,7 +8,7 @@
         <div class="col-12 align-self-center">
             <ul class="list-group">
                 @foreach ($todos as $todo)
-                    <li class="list-group-item"><a href="details/{{$todo->id}}" style="color: cornflowerblue">{{$todo->name}}</a></li>
+                    <li class="list-group-item"><a href="{{ route(name: 'details',parameters: [$todo->id]) }}" style="color: cornflowerblue">{{$todo->name}}</a></li>
                 @endforeach
             </ul>
         </div>

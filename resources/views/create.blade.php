@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('title')
@@ -6,7 +7,7 @@
 
 @section('content')
 
-    <form action="store" method="post" class="mt-4 p-4">
+    <form action="{{route('store')}}" method="post" class="mt-4 p-4">
         @csrf <div class="form-group m-3">
             <label for="name">Todo Name</label>
             <input type="text" class="form-control" name="name">

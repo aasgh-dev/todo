@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\StoreTodoRequest;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
 
@@ -23,6 +23,10 @@ class TodoController extends Controller
         return view('create');
     }
 
+    public function login(){
+        return view('login');
+    }
+
     public function details(Todo $todo)
     {
         return view('details')->with('todos', $todo);
@@ -33,7 +37,7 @@ class TodoController extends Controller
         return view('edit')->with("todos", $todo);
     }
 
-    public function update(StorePostRequest $request, Todo $todo)
+    public function update(StoreTodoRequest $request, Todo $todo)
     {
         $validated = $request->validated();
 
@@ -53,16 +57,21 @@ class TodoController extends Controller
     {
 
         $todo->delete();
+        session()->flash('success', "Todo Delete succesfully");
+
         return redirect('/');
     }
 
-    public function store(StorePostRequest $request)
+    public function store(StoreTodoRequest $request)
     {
         $validated = $request->validated();
+        
+        // for debuging
+        //dd($validated);
 
-        $todo=Todo::create(['name'=>$validated['name'],'description'=>$validated["description"]]);
+        $todo=Todo::create($validated);
         $todo->save();
-
+        
         session()->flash('success', "Todo created succesfully");
 
         return redirect('/');
