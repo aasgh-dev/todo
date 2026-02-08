@@ -3,8 +3,7 @@
 use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [TodoController::class,'index'])->name("index");
-
+Route::redirect('/', '/todo');
 
 
 Route::resource('todo', TodoController::class);
