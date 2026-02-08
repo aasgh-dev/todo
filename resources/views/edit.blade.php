@@ -5,8 +5,10 @@
 @endsection
 @section('content')
 
-    <form action="{{ route('update',[$todos->id]) }}" method="post" class="mt-4 p-4">
-       @csrf <div class="form-group m-3">
+    <form action="{{ route('todo.update',[$todos->id]) }}" method="post" class="mt-4 p-4">
+        @method('PUT')
+
+        @csrf <div class="form-group m-3">
             <label for="name">Todo Name</label>
             <input type="text" class="form-control" name="name" value="{{ $todos->name }}">
         </div>

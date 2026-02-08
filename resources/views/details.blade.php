@@ -14,9 +14,16 @@
 
             <h5 class="card-title">{{$todos->name}}</h5>
             <p class="card-text">{{$todos->description}}.</p>
-            <a href="{{ route('edit',[$todos->id]) }}"><span class="btn btn-primary">Edit</span></a>
-            <a href="{{ route('delete',[$todos->id]) }}"><span class="btn btn-danger">Delete</span></a>
+            <a href="{{ route('todo.edit', [$todos->id]) }}"><span class="btn btn-primary">Edit</span></a>
             
+
+            <form action="{{ route('todo.destroy', $todos->id) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                    Delete
+                </button>
+            </form>
         </div>
     </div>
 

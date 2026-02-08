@@ -27,12 +27,12 @@ class TodoController extends Controller
         return view('login');
     }
 
-    public function details(Todo $todo)
+    public function show(Todo $todo)
     {
         return view('details')->with('todos', $todo);
     }
 
-    public function edit(Todo $todo)
+    public function edit( Todo $todo)
     {
         return view('edit')->with("todos", $todo);
     }
@@ -50,16 +50,16 @@ class TodoController extends Controller
 
         session()->flash('success', 'Todo updated successfully');
 
-        return redirect('/');
+        return redirect(route('todo.index'));
     }
 
-    public function delete(Todo $todo)
+    public function destroy(Todo $todo)
     {
 
         $todo->delete();
         session()->flash('success', "Todo Delete succesfully");
 
-        return redirect('/');
+        return redirect(route('todo.index'));
     }
 
     public function store(StoreTodoRequest $request)
@@ -74,6 +74,6 @@ class TodoController extends Controller
         
         session()->flash('success', "Todo created succesfully");
 
-        return redirect('/');
+        return redirect(route('todo.index'));
     }
 }
