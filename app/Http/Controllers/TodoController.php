@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTodoRequest;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use \App\Models\Todo;
@@ -15,7 +16,7 @@ class TodoController extends Controller
     public function index()
     {
         $todo = Todo::all();
-        return view('todo.index')->with('todos', $todo);
+        return view('index')->with('todos', $todo);
     }
 
     public function create()
@@ -23,16 +24,13 @@ class TodoController extends Controller
         return view('create');
     }
 
-    public function login(){
-        return view('login');
-    }
 
     public function show(Todo $todo)
     {
         return view('details')->with('todos', $todo);
     }
 
-    public function edit( Todo $todo)
+    public function edit(Todo $todo)
     {
         return view('edit')->with("todos", $todo);
     }
@@ -50,7 +48,7 @@ class TodoController extends Controller
 
         session()->flash('success', 'Todo updated successfully');
 
-        return redirect(route('todo.index'));
+        return redirect(route('todos.index'));
     }
 
     public function destroy(Todo $todo)
@@ -59,21 +57,27 @@ class TodoController extends Controller
         $todo->delete();
         session()->flash('success', "Todo Delete succesfully");
 
-        return redirect(route('todo.index'));
+        return redirect(route('todos.index'));
     }
 
     public function store(StoreTodoRequest $request)
     {
         $validated = $request->validated();
-        
+
         // for debuging
         //dd($validated);
 
-        $todo=Todo::create($validated);
+        $user=Auth::user();
+
+        $todo = Todo::create([
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'user_id' => $user->id
+        ]);
         $todo->save();
-        
+
         session()->flash('success', "Todo created succesfully");
 
-        return redirect(route('todo.index'));
+        return redirect(route('todos.index'));
     }
 }

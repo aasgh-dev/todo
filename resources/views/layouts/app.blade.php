@@ -27,9 +27,25 @@
 
     <nav class="navbar navbar-light bg-light">
         <div class="container">
-            <a href="/"><span class="navbar-brand mb-0 h1">Todo</span></a>
-            <a href="{{route('todo.create')}}"><span class="btn btn-primary">Create Todo</span></a>
+            @auth
+                <a href="/"><span class="navbar-brand mb-0 h2">Todo</span></a>
+                <span class="text-sm">{{ auth()->user()->name }}</span>
+                <a href="{{route('todos.create')}}"><span class="btn btn-primary">Create Todo</span></a>
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="sumbit" class="btn btn-ghost btn-sm">Logout</button>
+                </form>
+
+            @else
+                <a href="{{ route('login') }}"><span class="btn btn-primary">Sign in</span></a>
+                <a href="{{route('register')}}"><span class="btn">Sign up</span></a>
+            @endauth
+
+
+
+
         </div>
+
     </nav>
 
     <div class="container">

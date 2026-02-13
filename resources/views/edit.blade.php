@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 
-    <form action="{{ route('todo.update',[$todos->id]) }}" method="post" class="mt-4 p-4">
+    <form action="{{ route('todos.update',[$todos->id]) }}" method="post" class="mt-4 p-4">
         @method('PUT')
 
         @csrf <div class="form-group m-3">

@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('project')->nullable()->constrained()->cascadeOnDelete();
+            $table->string('name',100); //I added the name column
+            $table->String('description',255); //I added the description column
             $table->timestamps();
-            $table->string('name'); //I added the name column
-            $table->text('description'); //I added the description column
         });
+        
+
+
     }
 
     /**
