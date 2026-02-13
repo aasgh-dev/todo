@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">Login</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -13,7 +13,7 @@
 
                         <!-- Email -->
                         <label class="floating-label mb-6">
-                            <input type="email" name="email" placeholder="[mail@example.com](<mailto:mail@example.com>)"
+                            <input type="email" name="email" placeholder="mail@example.com"
                                 value="{{ old('email') }}"
                                 class="input input-bordered @error('email') input-error @enderror" required autofocus>
                             <span>Email</span>

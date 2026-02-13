@@ -24,9 +24,10 @@
 </head>
 
 <body>
-
     <nav class="navbar navbar-light bg-light">
         <div class="container">
+
+            <!-- this nav bar will appear if there user sign in -->
             @auth
                 <a href="/"><span class="navbar-brand mb-0 h2">Todo</span></a>
                 <span class="text-sm">{{ auth()->user()->name }}</span>
@@ -36,13 +37,11 @@
                     <button type="sumbit" class="btn btn-ghost btn-sm">Logout</button>
                 </form>
 
+            <!-- if not login yet -->
             @else
                 <a href="{{ route('login') }}"><span class="btn btn-primary">Sign in</span></a>
                 <a href="{{route('register')}}"><span class="btn">Sign up</span></a>
             @endauth
-
-
-
 
         </div>
 
@@ -50,12 +49,14 @@
 
     <div class="container">
 
+        <!-- dialog message it appear if only if some event happpen -->
         @if(session()->has('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}
             </div>
         @endif
-
+        
+        <!-- dialog message it appear if only if some error happpen and can be as list of errors -->
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>

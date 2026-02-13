@@ -23,8 +23,8 @@ class StoreTodoRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'name'=>'required',//length
-           'description'=>'required',
+           'name'=>'required|max:100|string',
+           'description'=>'required|max:255|string',
         ];
     }
 

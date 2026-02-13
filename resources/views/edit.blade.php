@@ -5,10 +5,15 @@
 @endsection
 @section('content')
 
+
     <form action="{{ route('todos.update',[$todos->id]) }}" method="post" class="mt-4 p-4">
+        
+        <!-- why i use method('PUT') cuz post not the correct action to edit and html form doesn't support put action -->
         @method('PUT')
 
-        @csrf <div class="form-group m-3">
+        <!-- csrf is way to protect user from hacker -->
+        @csrf 
+        <div class="form-group m-3">
             <label for="name">Todo Name</label>
             <input type="text" class="form-control" name="name" value="{{ $todos->name }}">
         </div>

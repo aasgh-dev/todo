@@ -10,21 +10,21 @@ use Illuminate\Http\Request;
 
 Route::redirect('/', '/todos');
 
-
-Route::resource('todos', TodoController::class);
+// counter to who want enter my web site using url
+Route::resource('todos', TodoController::class)->middleware('auth');
 
 
 
 // Login
-Route::view('/login', 'auth.login')->name('login');
-Route::post('/login',Login::class);
+Route::view('/login', 'auth.login')->middleware('guest')->name('login');
+Route::post('/login', Login::class);
 
 // Register
-Route::view('/register', 'auth.register')->name('register');
+Route::view('/register', 'auth.register')->middleware('guest')->name('register');
 Route::post('/register', Register::class);
 
 // Logout 
-Route::post('/logout',Logout::class)->name('logout');
+Route::post('/logout', Logout::class)->middleware(middleware: 'auth')->name('logout');
 
 // email verify
 Route::get('/email/verify', function () {
@@ -33,12 +33,12 @@ Route::get('/email/verify', function () {
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
- 
+
     return redirect('/todos');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
- 
+
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
