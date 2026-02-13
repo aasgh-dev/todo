@@ -31,7 +31,7 @@
             @auth
                 <a href="/"><span class="navbar-brand mb-0 h2">Todo</span></a>
                 <span class="text-sm">{{ auth()->user()->name }}</span>
-                <a href="{{route('todos.create')}}"><span class="btn btn-primary">Create Todo</span></a>
+                <a href="{{route('todos.create')}}"><span class="btn btn-primary">Create Project</span></a>
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
                     <button type="sumbit" class="btn btn-ghost btn-sm">Logout</button>
