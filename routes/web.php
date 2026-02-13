@@ -5,15 +5,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\Auth\Logout;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
-Route::redirect('/', '/todos');
+Route::redirect('/', '/projects');
 
 // counter to who want enter my web site using url
 Route::resource('todos', TodoController::class)->middleware('auth');
 
-
+Route::resource('projects', ProjectController::class);
 
 // Login
 Route::view('/login', 'auth.login')->middleware('guest')->name('login');

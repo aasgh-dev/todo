@@ -18,25 +18,25 @@ class TodoController extends Controller
         // bring all record in todos table
         $todo = Todo::all();
         // return to home page with records
-        return view('index')->with('todos', $todo);
+        return view('todo.todos')->with('todos', $todo);
     }
 
     public function create()
     {
         // return create page    
-        return view('create');
+        return view('todo.create');
     }
 
     // show => details
     public function show(Todo $todo)
     {
         // return page with specific todo to edit it or deleta it 
-        return view('details')->with('todos', $todo);
+        return view('todo.details')->with('todos', $todo);
     }
 
     public function edit(Todo $todo)
     {
-        return view('edit')->with("todos", $todo);
+        return view('todo.edit')->with("todos", $todo);
     }
 
     public function update(StoreTodoRequest $request, Todo $todo)
@@ -44,14 +44,18 @@ class TodoController extends Controller
         // send form values to validator in {storeTodoRequest} to make it east to edit role
         $validated = $request->validated();
 
-        $todo->name = $validated['name'];
-        $todo->description = $validated["description"];
+        // old way || old school
+        // $todo->name = $validated['name'];
+        // $todo->description = $validated["description"];
 
-        // update existing record in database
-        $todo->save();
+        // // update existing record in database
+        // $todo->save();
 
         // ANTHOR WAY TO UPDATAE
         // DB::table("todos")->where('id',$todo['id'])->update(['name'=>$request['name'],'description'=>$request["description"]]);
+
+        // the shorter way
+        $todo->update($validated);
 
         // show dialog in home page to notify the user
         session()->flash('success', 'Todo updated successfully');

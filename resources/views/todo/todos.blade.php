@@ -4,15 +4,17 @@
 @endsection
 @section('content')
 
-<!-- auth use to check if user is entry is permitted -->
+    <a href="{{route('todos.create')}}"><span class="btn btn-primary">Create Todo</span></a>
+
+    <!-- auth use to check if user is entry is permitted -->
     @auth
         <div class="row mt-3">
             <div class="col-12 align-self-center">
                 <ul class="list-group">
-                    <!-- loop to show all todo --> 
+                    <!-- loop to show all todo -->
                     @foreach ($todos as $todo)
                         <li class="list-group-item">
-                            
+
                             <!-- hyperlink to edit or delete todo -->
                             <a href="{{ route(name: 'todos.show', parameters: [$todo->id]) }}"
                                 style="color: cornflowerblue">{{$todo->name}}</a>
@@ -24,7 +26,7 @@
                 </ul>
             </div>
         </div>
-<!-- if not show him a message to login -->
+        <!-- if not show him a message to login -->
     @else
         <div class="row mt-3">
             <div class="col-12 align-self-center">
