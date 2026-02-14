@@ -6,7 +6,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProjectRequest;
 use Illuminate\Validation\ValidationException;
-
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -36,8 +36,16 @@ class ProjectController extends Controller
     {
         $validated = $request->validated();
 
-        $project = Project::create($validated);
+        $user = Auth::user();
 
+        $project = Project::create(
+            attributes: [
+                'name' => $validated['name'],
+                'description' => $validated['description'],
+                'user_id' => $user->id,
+            ]
+        );
+        
         $project->save();
 
         return redirect(route('projects.index'));
