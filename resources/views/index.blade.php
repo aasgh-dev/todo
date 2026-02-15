@@ -24,6 +24,10 @@
 
                                 <a href="{{ route(name: 'todos.index', parameters: ['project_id' => $project->id]) }}"
                                     style="color: cornflowerblue">Todo List</a>
+                                <br>
+                                <a href="{{ route(name: 'invite') }}"
+                                    style="color: cornflowerblue">invite pepole</a>
+                                    
                                 <!--<input type="hidden" value=" $project->id }}" name="id">-->
                                 <!--<button type="submit" value=" $project->id }}" name="ii">Push me</button>-->
 

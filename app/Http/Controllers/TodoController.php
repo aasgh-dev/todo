@@ -10,11 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use \App\Models\Project;
 use \App\Models\Todo;
-use PhpParser\Builder\Property;
 
 class TodoController extends Controller
 {
-    public function index(Property $property,Request $request)
+    public function index(Request $request)
     {
         // bring all record in todos table
         $todo = Todo::where('project_id', $request['project_id'])->get();
