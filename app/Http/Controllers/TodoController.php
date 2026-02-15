@@ -8,35 +8,37 @@ use App\Http\Requests\StoreTodoRequest;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use \App\Models\Project;
 use \App\Models\Todo;
+use PhpParser\Builder\Property;
 
 class TodoController extends Controller
 {
-    public function index()
+    public function index(Property $property,Request $request)
     {
         // bring all record in todos table
-        $todo = Todo::all();
+        $todo = Todo::where('project_id', $request['project_id'])->get();
         // return to home page with records
-        return view('todo.todos')->with('todos', $todo);
+        return view('todo.todos')
+            ->with('todos', $todo)->with('project_id', $request['project_id']);
     }
 
-    public function create()
+    public function create(Request $request)
     {
         // return create page    
-        return view('todo.create');
+        return view('todo.create')->with('project_id', $request['project_id']);
     }
 
     // show => details
-    public function show(Todo $todo)
+    public function show(Todo $todo, Request $request)
     {
         // return page with specific todo to edit it or deleta it 
-        return view('todo.details')->with('todos', $todo);
+        return view('todo.details')->with('todos', $todo)->with('project_id', $request['project_id']);
     }
 
-    public function edit(Todo $todo)
+    public function edit(Todo $todo, Request $request)
     {
-        return view('todo.edit')->with("todos", $todo);
+        return view('todo.edit')->with("todos", $todo)->with('project_id',$request['project_id']);
     }
 
     public function update(StoreTodoRequest $request, Todo $todo)
@@ -60,19 +62,20 @@ class TodoController extends Controller
         // show dialog in home page to notify the user
         session()->flash('success', 'Todo updated successfully');
 
-        return redirect(route('todos.index'));
+        return redirect(route('todos.index', ['project_id' => $request['project_id']]));
     }
 
     // destroy => delete
-    public function destroy(Todo $todo)
+    public function destroy(Todo $todo, Request $request)
     {
+
         // delete specific todo 
         $todo->delete();
-        
+
         // show dialog in home page to notify the user
         session()->flash('success', "Todo Delete succesfully");
 
-        return redirect(route('todos.index'));
+        return redirect(route('todos.index', ['project_id' => $request['project_id']]));
     }
 
     public function store(StoreTodoRequest $request)
@@ -88,7 +91,9 @@ class TodoController extends Controller
         $todo = Todo::create([
             'name' => $validated['name'],
             'description' => $validated['description'],
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'project_id' => $request['project_id'],
+            'status'=>'todo',
         ]);
 
         // save new record in database
@@ -96,6 +101,6 @@ class TodoController extends Controller
 
         session()->flash('success', "Todo created succesfully");
 
-        return redirect(route('todos.index'));
+        return redirect(route('todos.index', ['project_id' => $request['project_id']]));
     }
 }

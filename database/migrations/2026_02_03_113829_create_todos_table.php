@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('project_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('name',100); //I added the name column
             $table->String('description',255); //I added the description column
+            $table->enum('status',['done','todo','in progress']);
             $table->timestamps();
         });
         

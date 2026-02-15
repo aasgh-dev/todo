@@ -14,7 +14,7 @@ Route::redirect('/', '/projects');
 // counter to who want enter my web site using url
 Route::resource('todos', TodoController::class)->middleware('auth');
 
-Route::resource('projects', ProjectController::class);
+Route::resource('projects', ProjectController::class)->middleware('auth');
 
 // Login
 Route::view('/login', 'auth.login')->middleware('guest')->name('login');
@@ -43,3 +43,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+Route::view('invite','invite')->name('invite');

@@ -25,6 +25,7 @@ class StoreTodoRequest extends FormRequest
         return [
            'name'=>'required|max:100|string',
            'description'=>'required|max:255|string',
+           'status'=>'required'
         ];
     }
 
