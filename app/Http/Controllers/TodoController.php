@@ -13,47 +13,34 @@ use \App\Models\Todo;
 
 class TodoController extends Controller
 {
-    public function index(Request $request)
+    public function index(Project $project)
     {
-        // bring all record in todos table
-        $todo = Todo::where('project_id', $request['project_id'])->get();
-        // return to home page with records
-        return view('todo.todos')
-            ->with('todos', $todo)->with('project_id', $request['project_id']);
+
+        return view('todo.todos', ['todos' => $project->todos, 'project' => $project]);
     }
 
-    public function create(Request $request)
+    public function create(Project $project)
     {
         // return create page    
-        return view('todo.create')->with('project_id', $request['project_id']);
+        return view('todo.create',['project'=> $project]);
     }
 
     // show => details
-    public function show(Todo $todo, Request $request)
+    public function show(Project $project,Todo $todo)
     {
-        // return page with specific todo to edit it or deleta it 
-        return view('todo.details')->with('todos', $todo)->with('project_id', $request['project_id']);
+        return view('todo.details',['todo' => $todo, 'project' => $project]);
     }
 
-    public function edit(Todo $todo, Request $request)
+    public function edit(Project $project,Todo $todo)
     {
-        return view('todo.edit')->with("todos", $todo)->with('project_id',$request['project_id']);
+        return view('todo.edit',['todo' => $todo, 'project' => $project]);
     }
 
-    public function update(StoreTodoRequest $request, Todo $todo)
+    public function update(StoreTodoRequest $request, Project $project,Todo $todo)
     {
         // send form values to validator in {storeTodoRequest} to make it east to edit role
         $validated = $request->validated();
 
-        // old way || old school
-        // $todo->name = $validated['name'];
-        // $todo->description = $validated["description"];
-
-        // // update existing record in database
-        // $todo->save();
-
-        // ANTHOR WAY TO UPDATAE
-        // DB::table("todos")->where('id',$todo['id'])->update(['name'=>$request['name'],'description'=>$request["description"]]);
 
         // the shorter way
         $todo->update($validated);
@@ -61,11 +48,11 @@ class TodoController extends Controller
         // show dialog in home page to notify the user
         session()->flash('success', 'Todo updated successfully');
 
-        return redirect(route('todos.index', ['project_id' => $request['project_id']]));
+        return redirect(route('projects.todos.index',['todo' => $project->todos, 'project' => $project]));
     }
 
     // destroy => delete
-    public function destroy(Todo $todo, Request $request)
+    public function destroy(Project $project,Todo $todo)
     {
 
         // delete specific todo 
@@ -74,15 +61,12 @@ class TodoController extends Controller
         // show dialog in home page to notify the user
         session()->flash('success', "Todo Delete succesfully");
 
-        return redirect(route('todos.index', ['project_id' => $request['project_id']]));
+        return redirect(route('projects.todos.index',['todos' => $project->todos, 'project' => $project]));
     }
 
-    public function store(StoreTodoRequest $request)
+    public function store(StoreTodoRequest $request, Project $project)
     {
         $validated = $request->validated();
-
-        // for debuging
-        //dd($validated);
 
         $user = Auth::user();
 
@@ -92,7 +76,7 @@ class TodoController extends Controller
             'description' => $validated['description'],
             'user_id' => $user->id,
             'project_id' => $request['project_id'],
-            'status'=>'todo',
+            'status' => 'todo',
         ]);
 
         // save new record in database
@@ -100,6 +84,6 @@ class TodoController extends Controller
 
         session()->flash('success', "Todo created succesfully");
 
-        return redirect(route('todos.index', ['project_id' => $request['project_id']]));
+        return redirect(route('projects.todos.index',['todo' => $project->todos, 'project' => $project]));
     }
 }

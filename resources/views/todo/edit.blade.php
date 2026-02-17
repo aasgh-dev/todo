@@ -5,7 +5,7 @@
 @section('content')
 
 
-    <form action="{{ route('todos.update', ['todo' => $todos->id, 'project_id' => $project_id]) }}" method="post"
+    <form action="{{ route('projects.todos.update', [$project,$todo]) }}" method="post"
         class="mt-4 p-4">
 
         <!-- why i use method('PUT') cuz post not the correct action to edit and html form doesn't support put action -->
@@ -15,11 +15,11 @@
         @csrf
         <div class="form-group m-3">
             <label for="name">Todo Name</label>
-            <input type="text" class="form-control" name="name" value="{{ $todos->name }}">
+            <input type="text" class="form-control" name="name" value="{{ $todo->name }}">
         </div>
         <div class="form-group m-3">
             <label for="description">Todo Description</label>
-            <textarea class="form-control" name="description" rows="3">{{$todos->description}}</textarea>
+            <textarea class="form-control" name="description" rows="3">{{$todo->description}}</textarea>
         </div>
 
         <div class="form-group ">

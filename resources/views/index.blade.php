@@ -11,27 +11,35 @@
         <div class="row mt-3">
             <div class="col-12 align-self-center">
                 <ul class="list-group">
-                    <!-- loop to show all todo -->
+
                     @foreach ($projects as $project)
                         <li class="list-group-item">
-                            <!-- hyperlink to edit or delete todo -->
-                            <a href="{{ route(name: 'projects.show', parameters: [$project->id]) }}"
+
+                            Name: <a href="{{ route(name: 'projects.show', parameters: [$project->id]) }}"
                                 style="color: cornflowerblue">{{$project->name}}</a>
+                            <p>Description: {{$project->description}}</p>
 
-                            <!-- to show who made this todo -->
                             <p>Leader {{ $project->user->name}}</p>
-                            <form action="{{ route('todos.index') }}">
 
-                                <a href="{{ route(name: 'todos.index', parameters: ['project_id' => $project->id]) }}"
-                                    style="color: cornflowerblue">Todo List</a>
-                                <br>
-                                <a href="{{ route(name: 'invite') }}"
-                                    style="color: cornflowerblue">invite pepole</a>
-                                    
-                                <!--<input type="hidden" value=" $project->id }}" name="id">-->
-                                <!--<button type="submit" value=" $project->id }}" name="ii">Push me</button>-->
+                            <a href="{{ route('projects.todos.index', $project) }}">Todo List</a>
+                            <br>
+                            <a href="{{ route('projects.invites.index',$project) }}">invote to project</a>
+                            <br>
+                            <a href="{{ route('projects.edit', $project->id) }}"><span class="btn btn-primary">Edit</span></a>
 
+
+                            <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;">
+
+                                @method('DELETE')
+
+                                @csrf
+
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                                    Delete
+                                </button>
                             </form>
+                            <br>
+
 
                         </li>
                     @endforeach

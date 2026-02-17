@@ -15,6 +15,12 @@
                     <a href=""
                         style="color: cornflowerblue">{{$user->name}}</a>
 
+                        <form action="{{ route('projects.invites.store',$project) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="user_id" value="{{ $user->id }}">
+                            <button type="submit">Add</button>
+                        </form>
+
                     <!-- to show who made this todo -->
                     
 

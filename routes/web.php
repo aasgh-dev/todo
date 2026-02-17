@@ -6,15 +6,16 @@ use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\InviteController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
 Route::redirect('/', '/projects');
 
-// counter to who want enter my web site using url
-Route::resource('todos', TodoController::class)->middleware('auth');
+Route::resource( 'projects', ProjectController::class);
 
-Route::resource('projects', ProjectController::class)->middleware('auth');
+Route::resource('projects.todos', TodoController::class)->middleware('auth');
+
 
 // Login
 Route::view('/login', 'auth.login')->middleware('guest')->name('login');
@@ -45,4 +46,4 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
-Route::view('invite','invite')->name('invite');
+Route::resource('projects.invites', InviteController::class);

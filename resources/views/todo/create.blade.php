@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <form action="{{route('todos.store')}}" method="post" class="mt-4 p-4">
+    <form action="{{route('projects.todos.store',$project)}}" method="post" class="mt-4 p-4">
         @csrf 
         <div class="form-group m-3">
             <label for="name">Todo Name</label>
@@ -18,7 +18,7 @@
             <textarea class="form-control" name="description" rows="3"></textarea>
         </div>
 
-        <input type="hidden" name="project_id" value="{{ $project_id }}">
+        <input type="hidden" name="project_id" value="{{ $project->id }}">
 
         <input type="hidden" name="status" value="todo">
 

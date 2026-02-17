@@ -2,21 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\InviteController;
+use App\Models\Invite;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreIvitedRequest;
+use App\Models\Project;
 use \App\Models\User;
 
-class InviteControllerController extends Controller
+class InviteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Project $project)
     {
-        $users = User::all();
+        $users = User::all()->except([Auth::id()]);
 
-        return view('invite')->with('user', $users);
+        return view('invite', ['project' => $project, 'users' => $users]);
     }
 
     /**
@@ -30,9 +33,25 @@ class InviteControllerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request,Project $project)
     {
-        //
+        // $validated = $request->validate([
+        //     'user_id'=>'required',
+        //     'project_id'=>'required',
+        // ]);
+
+        $invite = Invite::create(
+            [
+                'user_id' => $request['user_id'],
+                'project_id' => $project->id,
+            ]
+        );
+
+        $invite->save();
+
+        session()->flash('success','member added successfully');
+
+        return redirect(route('projects.invites.index',$project));
     }
 
     /**
@@ -64,6 +83,6 @@ class InviteControllerController extends Controller
      */
     public function destroy(InviteController $inviteController)
     {
-        //
+        
     }
 }

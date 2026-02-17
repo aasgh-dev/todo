@@ -14,11 +14,11 @@
         <!-- csrf is way to protect user from hacker -->
         @csrf 
         <div class="form-group m-3">
-            <label for="name">Todo Name</label>
+            <label for="name">Project Name</label>
             <input type="text" class="form-control" name="name" value="{{ $project->name }}">
         </div>
         <div class="form-group m-3">
-            <label for="description">Todo Description</label>
+            <label for="description">Project Description</label>
             <textarea class="form-control" name="description" rows="3">{{$project->description}}</textarea>
         </div>
         <div class="form-group m-3">

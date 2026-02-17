@@ -56,7 +56,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('project.details')->with('project', $project);
+        return view('todo.todos')->with('todos', $project);
     }
 
     /**
@@ -86,6 +86,6 @@ class ProjectController extends Controller
     {
         $project->delete();
 
-        return redirect(route('projects.index'));
+        return redirect()->route('projects.index');
     }
 }
