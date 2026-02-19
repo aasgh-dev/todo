@@ -98,7 +98,7 @@ Route::view('/register', 'auth.register')->middleware('guest')->name('register')
 Route::post('/register', Register::class);
 
 // Logout 
-Route::post(uri: '/logout', Logout::class)->middleware(middleware: 'auth')->name('logout');
+Route::post('/logout', Logout::class)->middleware(middleware: 'auth')->name('logout');
 
 // 1  email verify
 Route::get('/email/verify', function () {
