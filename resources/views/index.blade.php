@@ -11,30 +11,55 @@
         <div class="row mt-3">
             <div class="col-12 align-self-center">
                 <ul class="list-group">
-                    <!-- loop to show all todo -->
+                    @can(Auth::user()->is_admin)
+                        <a href="">Projects: {{ $projects->count() }}</a>
+                        <a href="">Users: {{ Auth::user()->count() }}</a>
+                    @endcan
+
                     @foreach ($projects as $project)
-                        <li class="list-group-item">
-                            <!-- hyperlink to edit or delete todo -->
-                            <a href="{{ route(name: 'projects.show', parameters: [$project->id]) }}"
-                                style="color: cornflowerblue">{{$project->name}}</a>
+                        @can('view', $project)
+                            <li class="list-group-item">
 
-                            <!-- to show who made this todo -->
-                            <p>Leader {{ $project->user->name}}</p>
-                            <form action="{{ route('todos.index') }}">
+                                Name: <a href="" style="color: cornflowerblue">{{$project->name}}</a>
+                                <p>Description: {{$project->description}}</p>
 
-                                <a href="{{ route(name: 'todos.index', parameters: ['project_id' => $project->id]) }}"
-                                    style="color: cornflowerblue">Todo List</a>
+                                <p>Leader {{ $project->user->name}}</p>
+
+                                <a href="{{ route('projects.todos.index', $project) }}">Todo List</a>
+
+                                @can('update', $project)
+                                    <br>
+                                    <a href="{{ route('projects.invites_project.index', $project) }}">invote to project</a>
+                                @endcan
+
+                                @can('update', $project)
+                                    <br>
+                                    <a href="{{ route('projects.edit', $project->id) }}"><span class="btn btn-primary">Edit</span></a>
+
+
+                                @endcan
+
+                                @can('delete', $project)
+
+                                    <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;">
+
+                                        @method('DELETE')
+
+                                        @csrf
+
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                                            Delete
+                                        </button>
+                                    </form>
+
+                                @endcan
                                 <br>
-                                <a href="{{ route(name: 'invite') }}"
-                                    style="color: cornflowerblue">invite pepole</a>
-                                    
-                                <!--<input type="hidden" value=" $project->id }}" name="id">-->
-                                <!--<button type="submit" value=" $project->id }}" name="ii">Push me</button>-->
 
-                            </form>
 
-                        </li>
+                            </li>
+                        @endcan
                     @endforeach
+
                 </ul>
             </div>
         </div>

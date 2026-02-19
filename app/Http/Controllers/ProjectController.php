@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\InviteRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProjectRequest;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests as AccessAuthorizesRequests;
 
 class ProjectController extends Controller
 {
+    use AccessAuthorizesRequests; 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $projetcs = Project::all();
 
+        $projetcs = Project::all();
         return view('index')->with('projects', $projetcs);
     }
 
@@ -45,7 +49,7 @@ class ProjectController extends Controller
                 'user_id' => $user->id,
             ]
         );
-        
+
         $project->save();
 
         return redirect(route('projects.index'));
@@ -56,7 +60,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('project.details')->with('project', $project);
+        return view('todo.todos')->with('todos', $project);
     }
 
     /**
@@ -86,6 +90,6 @@ class ProjectController extends Controller
     {
         $project->delete();
 
-        return redirect(route('projects.index'));
+        return redirect()->route('projects.index');
     }
 }

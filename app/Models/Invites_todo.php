@@ -6,12 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Project extends Model
+class Invites_todo extends Model
 {
-    // protected $fillable = [
-    //     'name',
-    //     'description'
-    // ];
     protected $guarded = [];
 
     public function user(): BelongsTo
@@ -19,14 +15,9 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
-    
-    public function invites_project(): HasMany
+    public function todo(): BelongsTo
     {
-        return $this->hasMany(Invites_project::class);
+        return $this->belongsTo(todo::class);
     }
 
-    public function todos(): HasMany
-    {
-        return $this->hasMany(Todo::class);
-    }
 }

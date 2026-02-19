@@ -18,10 +18,11 @@
             <label for="description">Project Description</label>
             <textarea class="form-control" name="description" rows="3"></textarea>
         </div>
-        
+
         <div class="form-group m-3">
             <input type="submit" class="btn btn-primary float-end" value="submit">
         </div>
+        
     </form>
 
 @endsection
