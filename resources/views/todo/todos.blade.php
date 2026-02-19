@@ -8,7 +8,7 @@
     @auth
 
         <div class="row mt-3">
-            @can(Auth::user()->is_admin)
+            @can('admin-only')
                 <a href="">Todos: {{ $todos->count() }}</a>
                 <a href="">Todos Status is Done : {{ $todos->where('status','done')->count() }}</a>
                 <a href="">Todos Status is Todo : {{ $todos->where('status','todo')->count()}}</a>

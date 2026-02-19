@@ -20,13 +20,13 @@ class ProjectPolicy
      * Determine whether the user can view the model.
      */
     public function view(User $user, Project $project): bool
-{
-    $isOwner = $user->id === $project->user_id;
+    {
+        $isOwner = $user->id === $project->user_id;
 
-    $isMember = $project->invites_project()->where('user_id', $user->id)->exists();
+        $isMember = $project->invites_project()->where('user_id', $user->id)->exists();
 
-    return $isOwner || $isMember;
-}
+        return $isOwner || $isMember;
+    }
 
     /**
      * Determine whether the user can create models.

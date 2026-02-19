@@ -11,7 +11,7 @@
         <div class="row mt-3">
             <div class="col-12 align-self-center">
                 <ul class="list-group">
-                    @can(Auth::user()->is_admin)
+                    @can('admin-only')
                         <a href="">Projects: {{ $projects->count() }}</a>
                         <a href="">Users: {{ Auth::user()->count() }}</a>
                     @endcan

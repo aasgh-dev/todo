@@ -17,7 +17,7 @@ class Todo extends Model
     // if i didnt put name or description on fillable then laravel hide this varible
     //protected $fillable = ['name','description'];
 
-    public function user(): BelongsTo
+    public function user(): BelongsTo // morph
     {
         return $this->belongsTo(User::class);
     }
