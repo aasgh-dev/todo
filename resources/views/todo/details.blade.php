@@ -19,21 +19,25 @@
             <a href="{{ route('projects.todos.edit', ['project' => $project, 'todo' => $todo]) }}"><span
                     class="btn btn-primary">Edit</span></a>
 
+            @can('update',$todo)
+                <a href="{{ route('projects.todos.invites_todo.index', ['project' => $project, 'todo' => $todo]) }}"><span
+                        class="btn btn-primary">Assign</span></a>
 
-            <form action="{{ route('projects.todos.destroy', ['project' => $project, 'todo' => $todo]) }}" method="POST"
-                style="display:inline;">
+                <form action="{{ route('projects.todos.destroy', ['project' => $project, 'todo' => $todo]) }}" method="POST"
+                    style="display:inline;">
 
-                <!-- why i use method('Delete') cuz post not the correct action to delete and html form doesn't support delete action -->
-                @method('DELETE')
+                    <!-- why i use method('Delete') cuz post not the correct action to delete and html form doesn't support delete action -->
+                    @method('DELETE')
 
 
-                <!-- csrf is way to protect user from hacker -->
-                @csrf
+                    <!-- csrf is way to protect user from hacker -->
+                    @csrf
 
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">
-                    Delete
-                </button>
-            </form>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                        Delete
+                    </button>
+                </form>
+            @endcan
         </div>
     </div>
 

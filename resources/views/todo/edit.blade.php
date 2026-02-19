@@ -5,8 +5,7 @@
 @section('content')
 
 
-    <form action="{{ route('projects.todos.update', [$project,$todo]) }}" method="post"
-        class="mt-4 p-4">
+    <form action="{{ route('projects.todos.update', [$project, $todo]) }}" method="post" class="mt-4 p-4">
 
         <!-- why i use method('PUT') cuz post not the correct action to edit and html form doesn't support put action -->
         @method('PUT')
@@ -25,10 +24,11 @@
         <div class="form-group ">
 
             <label for="status">Status</label>
-            <select name="status" id="">
-                <option value="done">done</option>
-                <option value="in progress">In Progress</option>
-                <option value="todo">Todo</option>
+            <select name="status" id="status">
+                <option value="todo" {{ old('status', $todo->status) == 'todo' ? 'selected' : '' }}>Todo</option>
+                <option value="in progress" {{ old('status', $todo->status) == 'in progress' ? 'selected' : '' }}>In Progress
+                </option>
+                <option value="done" {{ old('status', $todo->status) == 'done' ? 'selected' : '' }}>Done</option>
             </select>
 
         </div>

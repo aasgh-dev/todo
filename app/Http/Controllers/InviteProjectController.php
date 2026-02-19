@@ -2,24 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invite;
+use App\Models\Invites_project;
 use Illuminate\Http\Request;
+use App\Models\Invite;
+use App\Models\Todo;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreIvitedRequest;
 use App\Models\Project;
-use \App\Models\User;
+use Illuminate\Support\Collection;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
-class InviteController extends Controller
+class InviteProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Project $project)
     {
-        $users = User::all()->except([Auth::id()]);
+        $users=User::all();
 
-        return view('invite', ['project' => $project, 'users' => $users]);
+        return view('project.invite', ['project' => $project, 'users' => $users]);
     }
 
     /**
@@ -33,31 +37,26 @@ class InviteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,Project $project)
+    public function store(Request $request ,Project  $project)
     {
-        // $validated = $request->validate([
-        //     'user_id'=>'required',
-        //     'project_id'=>'required',
-        // ]);
-
-        $invite = Invite::create(
+        $invite = Invites_project::create(
             [
                 'user_id' => $request['user_id'],
                 'project_id' => $project->id,
             ]
         );
 
-        $invite->save();
+        // $invite->save();
 
-        session()->flash('success','member added successfully');
+        session()->flash('success', 'member added successfully');
 
-        return redirect(route('projects.invites.index',$project));
+        return redirect(route('projects.invites_project.index',  $project));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(InviteController $inviteController)
+    public function show(Invites_project $invites_project)
     {
         //
     }
@@ -65,7 +64,7 @@ class InviteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(InviteController $inviteController)
+    public function edit(Invites_project $invites_project)
     {
         //
     }
@@ -73,7 +72,7 @@ class InviteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, InviteController $inviteController)
+    public function update(Request $request, Invites_project $invites_project)
     {
         //
     }
@@ -81,8 +80,8 @@ class InviteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(InviteController $inviteController)
+    public function destroy(Invites_project $invites_project)
     {
-        
+        //
     }
 }

@@ -23,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'is_admin'
     ];
 
     /**
@@ -53,9 +54,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Todo::class);
     }
 
-    public function invites(): HasMany
+    // public function invites(): HasMany
+    // {
+    //     return $this->hasMany(Invite::class);
+    // }
+
+    public function invites_todo(): HasMany
     {
-        return $this->hasMany(Invite::class);
+        return $this->hasMany(Invites_todo::class);
+    }
+    
+    public function invites_project(): HasMany
+    {
+        return $this->hasMany(Invites_project::class);
     }
 
     public function projects(): HasMany
