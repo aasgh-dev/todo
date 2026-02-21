@@ -12,7 +12,7 @@
                 {{-- $users = User::whereDoesntHave('invites_project', function ($query) {
                 $query->where('project_id', 2);
                 })->get(); --}}
-                @if ($user->id !== $project->user_id && $user->invites_project->where('project_id', $project->id)->isEmpty())
+                @if ($user->id !== $project->user_id && $user->invites_project->where('project_id', $project->id)->isEmpty() && !($user->is_admin))
                     <li class="list-group-item">
 
                         <a href="" style="color: cornflowerblue">{{$user->name}}</a>
