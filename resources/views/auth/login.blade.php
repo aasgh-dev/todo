@@ -1,64 +1,52 @@
 @extends('layouts.app')
-
+@section('title', 'Sign In')
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="card">
-                    <div class="card-header">Login</div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-white border-bottom-0 pt-4 px-4 text-center">
+                    <h3 class="fw-bold h4 mb-0">Welcome Back</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
 
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-
-                            <!-- Email -->
-                            <label class="floating-label mb-6">
-                                <input type="email" name="email" placeholder="mail@example.com" value="{{ old('email') }}"
-                                    class="input input-bordered @error('email') input-error @enderror" required autofocus>
-                                <span>Email</span>
-                            </label>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small">Email Address</label>
+                            <input type="email" name="email" placeholder="mail@example.com" value="{{ old('email') }}"
+                                class="form-control @error('email') is-invalid @enderror" required autofocus> 
                             @error('email')
-                                <div class="label -mt-4 mb-2">
-                                    <span class="label-text-alt text-error">{{ $message }}</span>
-                                </div>
+                                <div class="invalid-feedback small">{{ $message }}</div> 
                             @enderror
+                        </div>
 
-                            <!-- Password -->
-                            <label class="floating-label mb-6">
-                                <input type="password" name="password" placeholder="••••••••"
-                                    class="input input-bordered @error('password') input-error @enderror" required>
-                                <span>Password</span>
-                            </label>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small">Password</label>
+                            <input type="password" name="password" placeholder="••••••••"
+                                class="form-control @error('password') is-invalid @enderror" required> 
                             @error('password')
-                                <div class="label -mt-4 mb-2">
-                                    <span class="label-text-alt text-error">{{ $message }}</span>
-                                </div>
+                                <div class="invalid-feedback small">{{ $message }}</div> 
                             @enderror
+                        </div>
 
-                            <!-- Remember Me -->
-                            <div class="form-control mt-4">
-                                <label class="label cursor-pointer justify-start">
-                                    <input type="checkbox" name="remember" class="checkbox">
-                                    <span class="label-text ml-2">Remember me</span>
-                                </label>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input type="checkbox" name="remember" id="remember" class="form-check-input"> 
+                                <label class="form-check-label small" for="remember">Remember me</label> 
                             </div>
+                            <a href="{{ route('password.request') }}" class="small text-decoration-none text-muted">
+                                Forgot password?
+                            </a> 
+                        </div>
 
-                            <!-- Submit Button -->
-                            <div class="form-control mt-8">
-                                <button type="submit" class="btn btn-primary btn-sm w-full">
-                                    Sign In
-                                </button>
-                            </div>
-
-                            <div class="mb-3 d-flex justify-content-between">
-                                <a href="{{ route('password.request') }}" class="text-decoration-none small text-muted">
-                                    Reset Password
-                                </a>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg">Sign In</button> 
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection

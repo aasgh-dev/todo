@@ -4,72 +4,75 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title') | My Todo App</title>
 
-    <title>
-        @yield('title')
-    </title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <!-- Google Fonts: Inter/Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body {
-            font-family: 'Nunito';
-        }
+        body { font-family: 'Inter', 'Nunito', sans-serif; background-color: #f8f9fa; }
+        .navbar { border-bottom: 1px solid #e3e6f0; }
+        .btn-primary { border-radius: 8px; }
+        .alert { border: none; border-radius: 10px; }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm mb-4">
         <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="/">
+                <i class="fas fa-check-double me-2"></i>TodoApp
+            </a>
 
-            <!-- this nav bar will appear if there user sign in -->
-            @auth
-                <a href="/"><span class="navbar-brand mb-0 h2">Todo</span></a>
-                <span class="text-sm">{{ auth()->user()->name }}</span>
-                <form action="{{ route('logout') }}" method="post">
-                    @csrf
-                    <button type="sumbit" class="btn btn-ghost btn-sm">Logout</button>
-                </form>
-
-            <!-- if not login yet -->
-            @else
-                <a href="{{ route('login') }}"><span class="btn btn-primary">Sign in</span></a>
-                <a href="{{route('register')}}"><span class="btn">Sign up</span></a>
-            @endauth
-
+            <div class="d-flex align-items-center">
+                @auth
+                    <div class="dropdown me-3">
+                        <span class="text-muted small me-2">Hello,</span>
+                        <span class="fw-bold me-3">{{ auth()->user()->name }}</span> 
+                    </div>
+                    <form action="{{ route('logout') }}" method="post" class="d-inline">
+                        @csrf 
+                        <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">Logout</button> 
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-link text-decoration-none text-dark me-2">Sign in</a> 
+                    <a href="{{route('register')}}" class="btn btn-primary px-4">Sign up</a> 
+                @endauth
+            </div>
         </div>
-
     </nav>
 
-    <div class="container">
-
-        <!-- dialog message it appear if only if some event happpen -->
+    <main class="container">
+        <!-- Flash Messages -->
         @if(session()->has('success'))
-            <div class="alert alert-success">
-                {{ session()->get('success') }}
+            <div class="alert alert-success d-flex align-items-center shadow-sm mb-4" role="alert">
+                <i class="fas fa-check-circle me-2"></i>
+                <div>{{ session()->get('success') }}</div> 
             </div>
         @endif
         
-        <!-- dialog message it appear if only if some error happpen and can be as list of errors -->
         @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
+            <div class="alert alert-danger shadow-sm mb-4">
+                <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong class="mb-0">Please check the following errors:</strong>
+                </div>
+                <ul class="mb-0 small">
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li>{{ $error }}</li> 
                     @endforeach
                 </ul>
             </div>
         @endif
 
-        @yield('content')
+        @yield('content') 
+    </main>
 
-    </div>
-
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

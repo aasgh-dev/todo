@@ -1,44 +1,37 @@
 @extends('layouts.app')
-
+@section('title', 'Verify Email')
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="card shadow-lg">
-                    <div class="card-header">Verify Your Email Address</div>
-
-                    <div class="card-body">
-                        @if (session('message'))
-                            <div class="alert alert-success mb-6 shadow-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="C9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span>A new verification link has been sent to your email address.</span>
-                            </div>
-                        @endif
-
-                        <div class="mb-6 text-gray-600 leading-relaxed">
-                            <p>Thanks for signing up! Before getting started, could you verify your email address by
-                                clicking on the link we just emailed to you?</p>
-                            <p class="mt-2 text-sm italic">If you didn't receive the email, we will gladly send you another.
-                            </p>
-                        </div>
-
-                        <div class="form-control mt-8">
-                            <form method="POST" action="{{ route('verification.send') }}">
-                                @csrf
-                                <button type="submit" class="btn btn-primary btn-sm w-full">
-                                    Resend Verification Email
-                                </button>
-                            </form>
-
-                            
-                        </div>
+<div class="container py-5">
+    <div class="row justify-content-center text-center">
+        <div class="col-md-7">
+            <div class="card border-0 shadow-lg p-4">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <i class="fas fa-envelope-open-text fa-4x text-primary opacity-25"></i>
                     </div>
+                    <h2 class="fw-bold mb-3">Verify Your Email Address</h2> 
+
+                    @if (session('message'))
+                        <div class="alert alert-success d-flex align-items-center justify-content-center mb-4" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <div>A new verification link has been sent to your email.</div> 
+                        </div>
+                    @endif
+
+                    <p class="text-muted mb-4 lead">
+                        Thanks for signing up! Please check your inbox and click the verification link to get started. 
+                    </p>
+                    <p class="text-muted small italic">Didn't receive the email? We can send another.</p> 
+
+                    <form method="POST" action="{{ route('verification.send') }}" class="mt-4">
+                        @csrf 
+                        <button type="submit" class="btn btn-primary px-5 rounded-pill shadow-sm">
+                            Resend Verification Email 
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
